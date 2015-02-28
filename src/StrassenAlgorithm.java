@@ -15,16 +15,16 @@ public class StrassenAlgorithm {
 		int m = powerOfTwo(n);						//m is the dimension of the two matrices	
 		System.out.println("The product of two " +m+" * " +m+ " matrices will be calculated");	
 				
-		/*Implementation of brutal force, Strassen algorithm and modified Strassen algorithm*/
+		/*Implementation of standard method, Strassen algorithm and modified Strassen algorithm*/
 		int a[][] = new int[m][m];
 		int b[][] = new int[m][m];	
-		int brutalResult[][] = new int[m][m];
+		int standardResult[][] = new int[m][m];
 		int strassenResult[][] = new int[m][m];
 		int modifiedStrassenResult[][] = new int[m][m];
 		
 		long tStart;
 		long tEnd;
-		long brutalForceTime;
+		long standardTime;
 		long strassenTime;
 		long modifiedStrassenTime;
 		
@@ -37,23 +37,23 @@ public class StrassenAlgorithm {
 
 //		printMatrix(b);		
 		
-//		System.out.println("\nThe brutal force result is ");
+//		System.out.println("\nThe standard method result is ");
 		tStart = System.nanoTime();
-		brutalResult=brutalForceProduct(a,b);
+		standardResult=standardMethod(a,b);
 		tEnd = System.nanoTime();
-		brutalForceTime=tEnd-tStart;
-//		printMatrix(brutalResult);
-		System.out.println("Brutal force method takes: \t\t" + brutalForceTime  + "ns");
+		standardTime=tEnd-tStart;
+//		printMatrix(standardResult);
+		System.out.println("Standard method takes: \t\t\t" + standardTime  + " ns");
 		
 		
 		
-//		System.out.println("\nThe Strassen Algroithm result is ");
+//		System.out.println("\nThe Strassen Algorithm result is ");
 		tStart = System.nanoTime();
 		strassenResult=strassenAlgorithm(a,b);
 		tEnd = System.nanoTime();
 		strassenTime = tEnd - tStart;
 //		printMatrix(strassenResult);
-		System.out.println("Strassen Algorithm takes: \t\t" + strassenTime + "ns");
+		System.out.println("Strassen Algorithm takes: \t\t" + strassenTime + " ns");
 		
 		
 //		System.out.println("\nThe Strassen Algroithm result is ");
@@ -62,7 +62,7 @@ public class StrassenAlgorithm {
 		tEnd = System.nanoTime();
 		modifiedStrassenTime = tEnd - tStart;
 //		printMatrix(modifiedStrassenResult);
-		System.out.println("Modified Strassen Algorithm takes: \t" + modifiedStrassenTime  + "ns");
+		System.out.println("Modified Strassen Algorithm takes: \t" + modifiedStrassenTime  + " ns");
 	}
 
 	/*Method that prints matrix elements*/
@@ -81,7 +81,7 @@ public class StrassenAlgorithm {
 		int len =a.length;
 		int result[][]=new int [len][len];
 		if (len==2){
-			result = brutalForceProduct(a,b);
+			result = standardMethod(a,b);
 		}
 		else {
 			/*split matrices a and b into 4 quarters each*/
@@ -118,7 +118,7 @@ public class StrassenAlgorithm {
 		int len =a.length;
 		int result[][]=new int [len][len];
 		if (len==2){
-			result = brutalForceProduct(a,b);
+			result = standardMethod(a,b);
 		}
 		else {
 			/*split matrices a and b into 4 quarters each*/
@@ -131,13 +131,13 @@ public class StrassenAlgorithm {
 			int b3[][]=quarter(b,3);
 			int b4[][]=quarter(b,4);
 			/*helper matrices m1~m7 for intermediate calculation*/
-			int m1[][]=brutalForceProduct(sum(a1,a4),sum(b1,b4));
-			int m2[][]=brutalForceProduct(sum(a3,a4),b1);
-			int m3[][]=brutalForceProduct(a1,sub(b2,b4));
-			int m4[][]=brutalForceProduct(a4,sub(b3,b1));
-			int m5[][]=brutalForceProduct(sum(a1,a2),b4);
-			int m6[][]=brutalForceProduct(sub(a3,a1),sum(b1,b2));
-			int m7[][]=brutalForceProduct(sub(a2,a4),sum(b3,b4));
+			int m1[][]=standardMethod(sum(a1,a4),sum(b1,b4));
+			int m2[][]=standardMethod(sum(a3,a4),b1);
+			int m3[][]=standardMethod(a1,sub(b2,b4));
+			int m4[][]=standardMethod(a4,sub(b3,b1));
+			int m5[][]=standardMethod(sum(a1,a2),b4);
+			int m6[][]=standardMethod(sub(a3,a1),sum(b1,b2));
+			int m7[][]=standardMethod(sub(a2,a4),sum(b3,b4));
 			
 			int c1[][]=sum(sum(m1,m4),sub(m7,m5)); //C_1,1 = (M1 + M4) + (M7 - M5)
 			int c2[][]=sum(m3,m5);				   //C_1,2 = M3 + M5
@@ -230,7 +230,7 @@ public class StrassenAlgorithm {
 	}
 	
 	/*Brutal force matrices product calculation method with time counter*/
-	public static int[][] brutalForceProduct(int[][] a, int[][] b) {
+	public static int[][] standardMethod(int[][] a, int[][] b) {
 //		long tStart = System.nanoTime();
 		int len = a.length;
 		int brutal[][] = new int[len][len];

@@ -21,6 +21,7 @@ public class StrassenAlgorithm {
 		int sub[][] = new int[m][m];
 		int sum[][] = new int[m][m];		
 		int brutalResult[][] = new int[m][m];
+		int q[][]= new int [m/2][m/2];
 		//int strassenResult[][] = new int[m][m];		
 
 		System.out.println("\nThe first Matrix a is ");
@@ -35,9 +36,15 @@ public class StrassenAlgorithm {
 		System.out.println("\nThe summation Matrix a is ");
 		sum= summationMatrices(a,b);
 		
-		
-		System.out.println("\nThe product Matrix c = a * b is ");		
+				
+		System.out.println("\nThe product Matrix c = a * b is ");
 		brutalResult = brutalForceProduct(a, b);
+		
+		System.out.println("\nThe quarter Matrix is ");
+		q= quarter(a, 1);		
+		q= quarter(a, 2);	
+		q= quarter(a, 3);	
+		q= quarter(a, 4);	
 		
 
 		
@@ -55,6 +62,67 @@ public class StrassenAlgorithm {
 	}
 
 
+	
+	/*Method that returns one of the 4 quarters of a 2^n * 2 ^n matrix
+	  index 1 for top-left corner; index 2 for top-right corner; 
+	  index 3 for bottom-left corner; index 4 for bottom-right corner; */
+	
+	public static int[][] quarter(int[][] A, int index) {
+		int len = A.length;
+		int l=len/2;
+		int quarter[][]= new int [l][l];
+		
+		switch (index){
+		case 1:
+			for (int i=0; i<l; i++){
+				for (int j=0; j<l;j++){
+					quarter[i][j]= A[i][j];
+				}
+			}
+			break;
+		case 2:
+			for (int i=0; i<l; i++){
+				for (int j=0; j<l;j++){
+					quarter[i][j]= A[i][l+j];
+				}
+			}
+			break;
+		case 3:
+			for (int i=0; i<l; i++){
+				for (int j=0; j<l;j++){
+					quarter[i][j]= A[l+i][j];
+				}
+			}
+			break;
+		case 4:
+			for (int i=0; i<l; i++){
+				for (int j=0; j<l;j++){
+					quarter[i][j]= A[l+i][l+j];
+				}
+			}
+			break;
+		default:
+			break;		
+		}		
+		
+		for (int i=0; i<l; i++){
+			for (int j=0; j<l; j++){
+				System.out.print("quarter["+i+"]["+j+"]="+quarter[i][j]+"\t");			
+			}
+			System.out.println();
+		}
+
+		return quarter;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 
 
 
@@ -81,6 +149,11 @@ public class StrassenAlgorithm {
 
 
 
+	
+	
+	
+	
+	
 
 	public static int[][] substractMatrices(int[][] a, int[][] b) {
 		int len = a.length;

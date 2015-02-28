@@ -18,39 +18,29 @@ public class StrassenAlgorithm {
 		/*Generation of Two Matrices using dimension m*/
 		int a[][] = new int[m][m];
 		int b[][] = new int[m][m];
-		
-		Random Rand= new Random ();	
+		int sub[][] = new int[m][m];
+		int sum[][] = new int[m][m];		
+		int brutalResult[][] = new int[m][m];
+		//int strassenResult[][] = new int[m][m];		
 
 		System.out.println("\nThe first Matrix a is ");
-		for (int x1=0; x1<m; x1++){
-			for (int y1=0; y1<m; y1++){
-				a[x1][y1]=Rand.nextInt(100);
-				System.out.print("a["+x1+"]["+y1+"]="+a[x1][y1]+"\t");
-			}
-			System.out.println();
-		}
+		a=createMatrix(m);
+
+		System.out.println("\nThe second Matrix b is ");
+		b=createMatrix(m);
+	
+		System.out.println("\nThe difference Matrix a is ");
+		sub = substractMatrices(a, b);
 		
-		System.out.println("\nThe Second Matrix b is ");	
-		for (int x2=0; x2<m; x2++){
-			for (int y2=0; y2<m; y2++){
-				b[x2][y2]=Rand.nextInt(100);
-				System.out.print("b["+x2+"]["+y2+"]="+b[x2][y2]+"\t");
-			}
-			System.out.println();
-		}	
+		System.out.println("\nThe summation Matrix a is ");
+		sum= summationMatrices(a,b);
+		
 		
 		System.out.println("\nThe product Matrix c = a * b is ");		
-		int c[][] = new int[m][m];
-		for (int i=0; i<m; i++){
-			for (int j=0; j<m; j++){
-				c[i][j]=0;
-				for (int k=0; k<m; k++){
-					c[i][j]+=a[i][k]*b[k][j];
-				}
-				System.out.print("c["+i+"]["+j+"]="+c[i][j]+"\t");			
-			}
-			System.out.println();
-		}
+		brutalResult = brutalForceProduct(a, b);
+		
+		
+		
 		
 
 
@@ -61,8 +51,74 @@ public class StrassenAlgorithm {
 
 
 	}
+
+
+
+
+
+	public static int[][] brutalForceProduct(int[][] a, int[][] b) {
+		int len = a.length;
+		int brutal[][] = new int[len][len];
+		for (int i=0; i<len; i++){
+			for (int j=0; j<len; j++){
+				brutal[i][j]=0;
+				for (int k=0; k<len; k++){
+					brutal[i][j]+=a[i][k]*b[k][j];
+				}
+				System.out.print("brutal["+i+"]["+j+"]="+brutal[i][j]+"\t");			
+			}
+			System.out.println();
+		}
+		return brutal;
+	}
+
+
+
+
+
+	public static int[][] substractMatrices(int[][] a, int[][] b) {
+		int len = a.length;
+		int difference[][] = new int [len][len];
+		for (int i=0; i<len; i++){
+			for (int j=0;j<len;j++){
+				difference [i][j]=a[i][j]-b[i][j];
+				System.out.print("a["+i+"]["+j+"]-b["+i+"]["+j+"]="+ difference[i][j]+"\t");
+			}
+			System.out.println();
+		}
+		return difference;
+	}
+
+	public static int[][] summationMatrices(int[][] a, int[][] b) {
+		int len = a.length;
+		int difference[][] = new int [len][len];
+		for (int i=0; i<len; i++){
+			for (int j=0;j<len;j++){
+				difference [i][j]=a[i][j]+b[i][j];
+				System.out.print("a["+i+"]["+j+"]+b["+i+"]["+j+"]="+ difference[i][j]+"\t");
+			}
+			System.out.println();
+		}
+		return difference;
+	}	
+	
+
 	
 	
+	
+	/*Method for generating 2^n * 2^n matrix with elements as random integers between 0 and 100 given an integer dimension=2^n*/
+	public static int[][] createMatrix(int dimension) {
+		int[][] matrix = new int [dimension][dimension];
+		Random Rand= new Random ();	
+		for (int x=0; x<dimension; x++){
+			for (int y=0; y<dimension; y++){
+				matrix[x][y]=Rand.nextInt(100);
+				System.out.print("matrix["+x+"]["+y+"]="+matrix[x][y]+"\t");
+			}
+			System.out.println();
+		}
+		return matrix;
+	}	
 	
 	
 	/*BufferedReader method for data input*/
@@ -80,6 +136,7 @@ public class StrassenAlgorithm {
 		}
 	}
 	
+	/*Simple method that returns 2^n given n*/
 	public static int powerOfTwo(int exp){
 		int result = 1;
 		for (int i=0;i<exp;i++){

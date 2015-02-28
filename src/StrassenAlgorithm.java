@@ -39,6 +39,8 @@ public class StrassenAlgorithm {
 		System.out.println("\nThe product Matrix c = a * b is ");		
 		brutalResult = brutalForceProduct(a, b);
 		
+
+		
 		
 		
 		
@@ -57,6 +59,7 @@ public class StrassenAlgorithm {
 
 
 	public static int[][] brutalForceProduct(int[][] a, int[][] b) {
+		long tStart = System.nanoTime();
 		int len = a.length;
 		int brutal[][] = new int[len][len];
 		for (int i=0; i<len; i++){
@@ -69,6 +72,9 @@ public class StrassenAlgorithm {
 			}
 			System.out.println();
 		}
+		long tEnd = System.nanoTime();
+		long time= tEnd-tStart;
+		System.out.println("Brutal Force method costs " + time + "ns");
 		return brutal;
 	}
 

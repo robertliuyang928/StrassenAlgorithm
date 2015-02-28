@@ -15,101 +15,57 @@ public class StrassenAlgorithm {
 		int m = powerOfTwo(n);						//m is the dimension of the two matrices	
 		System.out.println("The product of two " +m+" * " +m+ " matrices will be calculated");	
 				
-		/*Generation of Two Matrices using dimension m*/
+		/*Implementation of brutal force, Strassen algorithm and modified Strassen algorithm*/
 		int a[][] = new int[m][m];
-		int b[][] = new int[m][m];
-//		int sub[][] = new int[m][m];
-//		int sum[][] = new int[m][m];		
+		int b[][] = new int[m][m];	
 		int brutalResult[][] = new int[m][m];
 		int strassenResult[][] = new int[m][m];
-//		int q1[][]= new int [m/2][m/2];
-//		int q2[][]= new int [m/2][m/2];
-//		int q3[][]= new int [m/2][m/2];
-//		int q4[][]= new int [m/2][m/2];
-//		int c[][]= new int [m][m];		
-		//int strassenResult[][] = new int[m][m];	
+		int modifiedStrassenResult[][] = new int[m][m];
 		
 		long tStart;
 		long tEnd;
 		long brutalForceTime;
 		long strassenTime;
-
-		System.out.println("\nThe first Matrix a is ");
-		a=createMatrix(m);
-//		printMatrix(a);
+		long modifiedStrassenTime;
 		
-
-		System.out.println("\nThe second Matrix b is ");
+		a=createMatrix(m);	
 		b=createMatrix(m);
-//		printMatrix(b);
+//		System.out.println("\nThe first Matrix a is ");
+
+//		printMatrix(a);		
+//		System.out.println("\nThe second Matrix b is ");
+
+//		printMatrix(b);		
 		
-		System.out.println("\nThe brutal force result is ");
+//		System.out.println("\nThe brutal force result is ");
 		tStart = System.nanoTime();
 		brutalResult=brutalForceProduct(a,b);
 		tEnd = System.nanoTime();
 		brutalForceTime=tEnd-tStart;
 //		printMatrix(brutalResult);
-		System.out.println("Brutal force method takes " + brutalForceTime);
+		System.out.println("Brutal force method takes: \t\t" + brutalForceTime  + "ns");
 		
 		
 		
-		System.out.println("\nThe Strassen Algroithm result is ");
+//		System.out.println("\nThe Strassen Algroithm result is ");
 		tStart = System.nanoTime();
 		strassenResult=strassenAlgorithm(a,b);
 		tEnd = System.nanoTime();
 		strassenTime = tEnd - tStart;
 //		printMatrix(strassenResult);
-		System.out.println("Strassen Algorithm takes " + strassenTime);
-		
-		long timeDifference = brutalForceTime - strassenTime;
-		
-		System.out.println("Strassen Algorithm is " + timeDifference + " faster than the brutal force method ");	
-		
-	
-//		System.out.println("\nThe difference Matrix a is ");
-//		sub = sub(a, b);
-//		
-//		System.out.println("\nThe summation Matrix a is ");
-//		sum= sum(a,b);
-//		
-//				
-//		System.out.println("\nThe product Matrix c = a * b is ");
-//		brutalResult = brutalForceProduct(a, b);
-//		
-//		System.out.println("\nThe quarter Matrix is ");
-//		q1= quarter(a, 1);		
-//		q2= quarter(a, 2);	
-//		q3= quarter(a, 3);	
-//		q4= quarter(a, 4);	
-//		
-//		System.out.println("\nThe merge Matrix is ");
-//		c = merge(q1,q2,q3,q4);
-//		
-//		
-//		System.out.println("\nThe difference Matrix a is ");
-//		sub = sub(a, c);
+		System.out.println("Strassen Algorithm takes: \t\t" + strassenTime + "ns");
 		
 		
-		
-		
-		
-		
-
-		
-		
-		
-		
-
-
-		
-		
-		
-		
-
-
+//		System.out.println("\nThe Strassen Algroithm result is ");
+		tStart = System.nanoTime();
+		modifiedStrassenResult=modifiedStrassenAlgorithm(a,b);
+		tEnd = System.nanoTime();
+		modifiedStrassenTime = tEnd - tStart;
+//		printMatrix(modifiedStrassenResult);
+		System.out.println("Modified Strassen Algorithm takes: \t" + modifiedStrassenTime  + "ns");
 	}
 
-	
+	/*Method that prints matrix elements*/
 	public static void printMatrix(int a[][]){
 		int len = a.length;
 		for (int i=0;i<len;i++){
@@ -120,7 +76,7 @@ public class StrassenAlgorithm {
 		}
 	}
 	
-/*Strassen matrices product calculation method*/
+	/*Strassen matrices product calculation method*/
 	public static int[][] strassenAlgorithm(int a[][], int b[][]){
 		int len =a.length;
 		int result[][]=new int [len][len];
@@ -128,7 +84,6 @@ public class StrassenAlgorithm {
 			result = brutalForceProduct(a,b);
 		}
 		else {
-			//ArrayList<int[][]> m = new ArrayList<int[][]> ();
 			/*split matrices a and b into 4 quarters each*/
 			int a1[][]=quarter(a,1);
 			int a2[][]=quarter(a,2);
@@ -138,7 +93,7 @@ public class StrassenAlgorithm {
 			int b2[][]=quarter(b,2);
 			int b3[][]=quarter(b,3);
 			int b4[][]=quarter(b,4);
-			/*helper matrices m1~m7 for intermediate calculation*/
+			/*auxiliary matrices m1~m7 for intermediate calculation*/
 			int m1[][]=strassenAlgorithm(sum(a1,a4),sum(b1,b4));
 			int m2[][]=strassenAlgorithm(sum(a3,a4),b1);
 			int m3[][]=strassenAlgorithm(a1,sub(b2,b4));
@@ -157,9 +112,8 @@ public class StrassenAlgorithm {
 		
 		return result;
 	}
-
 	
-	/*modified strassen algorithm*/
+	/*modified Strassen algorithm*/
 	public static int[][] modifiedStrassenAlgorithm(int a[][], int b[][]){
 		int len =a.length;
 		int result[][]=new int [len][len];
@@ -167,7 +121,6 @@ public class StrassenAlgorithm {
 			result = brutalForceProduct(a,b);
 		}
 		else {
-			//ArrayList<int[][]> m = new ArrayList<int[][]> ();
 			/*split matrices a and b into 4 quarters each*/
 			int a1[][]=quarter(a,1);
 			int a2[][]=quarter(a,2);
@@ -196,33 +149,21 @@ public class StrassenAlgorithm {
 		
 		return result;
 	}
-
-	
-	
-	
-	
-	
 	
 	/*Method that merges 4 matrices into one matrix
 	 * c1 as top-left; c2 as top-right
 	 * c3 as bottom-left; c4 as bottom-right*/
-	
-
-	
-	
-	
-	
-	
 	public static int[][] merge(int c1[][],int c2[][],int c3[][],int c4[][]){
 		int l = c1.length;
 		int len = 2*l;
 		int result[][]= new int [len][len];
+		
 		for (int i=0; i<l;i++){
 			for (int j=0;j<l;j++){
 				result [i][j]=c1[i][j];
 			}
 		}
-
+		
 		for (int i=0; i<l;i++){
 			for (int j=0;j<l;j++){
 				result [i][l+j]=c2[i][j];
@@ -241,18 +182,9 @@ public class StrassenAlgorithm {
 			}
 		}
 		
-//		for (int i=0; i<len; i++){
-//			for (int j=0; j<len; j++){
-//				System.out.print("merge["+i+"]["+j+"]="+result[i][j]+"\t");			
-//			}
-//			System.out.println();
-//		}
-
-		
 		return result;
 	}
-	
-	
+
 	/*Method that returns one of the 4 quarters of a 2^n * 2 ^n matrix
 	 *index 1 for top-left corner; index 2 for top-right corner; 
 	 *index 3 for bottom-left corner; index 4 for bottom-right corner; */
@@ -294,15 +226,7 @@ public class StrassenAlgorithm {
 			break;		
 		}		
 		
-//		for (int i=0; i<l; i++){
-//			for (int j=0; j<l; j++){
-//				System.out.print("quarter["+i+"]["+j+"]="+quarter[i][j]+"\t");			
-//			}
-//			System.out.println();
-//		}
-
-		return quarter;
-		
+		return quarter;		
 	}
 	
 	/*Brutal force matrices product calculation method with time counter*/
@@ -315,14 +239,10 @@ public class StrassenAlgorithm {
 				brutal[i][j]=0;
 				for (int k=0; k<len; k++){
 					brutal[i][j]+=a[i][k]*b[k][j];
-				}
-//				System.out.print("brutal["+i+"]["+j+"]="+brutal[i][j]+"\t");			
+				}			
 			}
-//			System.out.println();
 		}
-//		long tEnd = System.nanoTime();
-//		long time= tEnd-tStart;
-//		System.out.println("Brutal Force method costs " + time + "ns");
+
 		return brutal;
 	}
 		
@@ -333,9 +253,7 @@ public class StrassenAlgorithm {
 		for (int i=0; i<len; i++){
 			for (int j=0;j<len;j++){
 				difference [i][j]=a[i][j]-b[i][j];
-//				System.out.print("a["+i+"]["+j+"]-b["+i+"]["+j+"]="+ difference[i][j]+"\t");
 			}
-//			System.out.println();
 		}
 		return difference;
 	}
@@ -347,9 +265,7 @@ public class StrassenAlgorithm {
 		for (int i=0; i<len; i++){
 			for (int j=0;j<len;j++){
 				difference [i][j]=a[i][j]+b[i][j];
-//				System.out.print("a["+i+"]["+j+"]+b["+i+"]["+j+"]="+ difference[i][j]+"\t");
 			}
-//			System.out.println();
 		}
 		return difference;
 	}	
@@ -361,9 +277,7 @@ public class StrassenAlgorithm {
 		for (int x=0; x<dimension; x++){
 			for (int y=0; y<dimension; y++){
 				matrix[x][y]=Rand.nextInt(100);
-//				System.out.print("matrix["+x+"]["+y+"]="+matrix[x][y]+"\t");
 			}
-//			System.out.println();
 		}
 		return matrix;
 	}	
@@ -391,9 +305,5 @@ public class StrassenAlgorithm {
 		}
 		return result;
 	}
-	
-
-	
-	
 
 }

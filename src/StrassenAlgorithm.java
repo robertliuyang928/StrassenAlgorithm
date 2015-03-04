@@ -53,7 +53,7 @@ public class StrassenAlgorithm {
 		tEnd = System.nanoTime();
 		strassenTime = tEnd - tStart;
 //		printMatrix(strassenResult);
-		System.out.println("Strassen Algorithm takes: \t\t" + strassenTime + " ns");
+		System.out.println("The recursive Strassen Algorithm takes: \t\t" + strassenTime + " ns");
 		
 		
 //		System.out.println("\nThe Strassen Algroithm result is ");
@@ -80,7 +80,7 @@ public class StrassenAlgorithm {
 	public static int[][] strassenAlgorithm(int a[][], int b[][]){
 		int len =a.length;
 		int result[][]=new int [len][len];
-		if (len==2){
+		if (len<=512){
 			result = standardMethod(a,b);
 		}
 		else {
@@ -117,7 +117,7 @@ public class StrassenAlgorithm {
 	public static int[][] modifiedStrassenAlgorithm(int a[][], int b[][]){
 		int len =a.length;
 		int result[][]=new int [len][len];
-		if (len==2){
+		if (len<=512){
 			result = standardMethod(a,b);
 		}
 		else {
